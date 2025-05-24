@@ -1,7 +1,7 @@
 import yfinance as yf
 import pandas as pd
 from ta.trend import EMAIndicator
-
+import json
 
 def fetch_stock_data(ticker, period='1y', interval='1d'):
     """
@@ -96,3 +96,32 @@ def get_fundamentals(ticker):
         'YoY Sales': yoy_revenue_change
     }
     return results
+
+def read_config():
+    """
+    Read configuration settings from a JSON file.
+    Returns:
+        dict: Configuration settings.
+    """
+    try:
+        with open('app/data/config.json', 'r') as f:
+            config = json.load(f)
+        return config
+    except FileNotFoundError:
+        print("Configuration file not found.")
+        return {}
+    except json.JSONDecodeError:
+        print("Error decoding JSON from configuration file.")
+        return {}
+
+def write_config(config):
+    """
+    Write configuration settings to a JSON file.
+    Args:
+        config (dict): Configuration settings to write.
+    """
+    try:
+        with open('app/data/config.json', 'w') as f:
+            json.dump(config, f, indent=4)
+    except Exception as e:
+        print(f"Error writing configuration file: {e}")
