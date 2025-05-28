@@ -1,0 +1,16 @@
+name: Refresh Data
+on:
+  schedule:
+    - cron: '50 11 * * 1-5'  
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Run script
+        run: app/test.py
