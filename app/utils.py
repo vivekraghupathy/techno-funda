@@ -2,6 +2,8 @@ import yfinance as yf
 import json
 import pandas as pd
 from datetime import date
+from streamlit_gsheets import GSheetsConnection
+import streamlit as st
 
 def get_stock_data(stock_ticker, session=None):
     """
@@ -24,7 +26,9 @@ def get_tickers():
     Returns:
         list: List of stock ticker symbols.
     """
-    df = pd.read_csv('app/data/NIFTY500_List.csv')
+    # Create a connection object.
+    conn = st.connection("ticker_list", type=GSheetsConnection)
+    df = conn.read()
     symbol_list = df['Symbol'].apply(lambda x: x + '.NS').to_list()
     return symbol_list
 
