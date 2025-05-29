@@ -114,7 +114,6 @@ except Exception as e:
     print(f"Error reading cached data: {e}")
     data_refresh = True
 
-data_refresh = True  # Force refresh if any error occurs
 
 if data_refresh:
     df_results = screen_stocks()
